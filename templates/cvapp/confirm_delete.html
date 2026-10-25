@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Dzēst{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-7 col-lg-6">
+    <div class="card border-danger shadow-sm">
+      <div class="card-body p-4">
+        <h1 class="h4 text-danger">Vai tiešām dzēst?</h1>
+        <p><strong>{{ obj }}</strong></p>
+        <form method="post">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">Jā, dzēst</button>
+          <a class="btn btn-outline-secondary" href="{{ back_url }}">Atcelt</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

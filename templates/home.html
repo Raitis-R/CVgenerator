@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}CV ģenerators – sākums{% endblock %}
+
+{% block content %}
+<section class="hero text-center">
+  <h1 class="display-5 fw-bold">Izveido profesionālu CV dažās minūtēs</h1>
+  <p class="lead text-muted mx-auto" style="max-width: 640px;">
+    Ievadi savu izglītību, darba pieredzi, prasmes un valodas, izvēlies dizainu
+    un saglabā gatavo CV kā PDF.
+  </p>
+  <div class="d-flex justify-content-center gap-2 mt-4">
+    {% if user.is_authenticated %}
+      <a class="btn btn-primary btn-lg" href="{% url 'cv_list' %}">Mani CV</a>
+      <a class="btn btn-outline-primary btn-lg" href="{% url 'cv_create' %}">Izveidot jaunu</a>
+    {% else %}
+      <a class="btn btn-primary btn-lg" href="{% url 'register' %}">Sākt bez maksas</a>
+      <a class="btn btn-outline-primary btn-lg" href="{% url 'login' %}">Man jau ir konts</a>
+    {% endif %}
+  </div>
+</section>
+
+<section class="row g-4 mt-4">
+  <div class="col-md-4">
+    <div class="feature-card h-100">
+      <h3 class="h5">✍️ Ērta aizpildīšana</h3>
+      <p class="mb-0 text-muted">Katra sadaļa – izglītība, pieredze, prasmes, valodas – tiek pievienota atsevišķi.</p>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="feature-card h-100">
+      <h3 class="h5">🎨 Trīs dizaini</h3>
+      <p class="mb-0 text-muted">Klasisks, moderns vai minimālistisks – dizainu var mainīt jebkurā brīdī.</p>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="feature-card h-100">
+      <h3 class="h5">🖨️ PDF vienā klikšķī</h3>
+      <p class="mb-0 text-muted">Atver priekšskatījumu un saglabā CV kā PDF caur pārlūka drukāšanas dialogu.</p>
+    </div>
+  </div>
+</section>
+{% endblock %}

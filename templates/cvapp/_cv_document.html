@@ -1,0 +1,75 @@
+<article class="cv-document cv-{{ cv.template }}" id="cv-document">
+  <header class="cv-header">
+    <h1>{{ cv.full_name }}</h1>
+    {% if cv.job_title %}<p class="cv-job">{{ cv.job_title }}</p>{% endif %}
+    <p class="cv-contacts">
+      {{ cv.email }}{% if cv.phone %} · {{ cv.phone }}{% endif %}{% if cv.city %} · {{ cv.city }}{% endif %}
+    </p>
+  </header>
+
+  {% if cv.summary %}
+  <section class="cv-section">
+    <h2>Profils</h2>
+    <p>{{ cv.summary|linebreaksbr }}</p>
+  </section>
+  {% endif %}
+
+  {% with items=cv.experiences.all %}
+  {% if items %}
+  <section class="cv-section">
+    <h2>Darba pieredze</h2>
+    {% for e in items %}
+    <div class="cv-item">
+      <div class="cv-item-head">
+        <strong>{{ e.position }}</strong>, {{ e.company }}
+        <span class="cv-dates">{{ e.start_date|date:"m.Y" }} – {% if e.end_date %}{{ e.end_date|date:"m.Y" }}{% else %}līdz šim{% endif %}</span>
+      </div>
+      {% if e.description %}<p>{{ e.description|linebreaksbr }}</p>{% endif %}
+    </div>
+    {% endfor %}
+  </section>
+  {% endif %}
+  {% endwith %}
+
+  {% with items=cv.educations.all %}
+  {% if items %}
+  <section class="cv-section">
+    <h2>Izglītība</h2>
+    {% for ed in items %}
+    <div class="cv-item">
+      <div class="cv-item-head">
+        <strong>{{ ed.degree }}</strong>, {{ ed.institution }}
+        <span class="cv-dates">{{ ed.start_year }} – {% if ed.end_year %}{{ ed.end_year }}{% else %}līdz šim{% endif %}</span>
+      </div>
+    </div>
+    {% endfor %}
+  </section>
+  {% endif %}
+  {% endwith %}
+
+  {% with items=cv.skills.all %}
+  {% if items %}
+  <section class="cv-section">
+    <h2>Prasmes</h2>
+    <ul class="cv-skills">
+      {% for s in items %}
+      <li>{{ s.name }} <span class="cv-level">{{ s.get_level_display }}</span></li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+  {% endwith %}
+
+  {% with items=cv.languages.all %}
+  {% if items %}
+  <section class="cv-section">
+    <h2>Valodas</h2>
+    <ul class="cv-skills">
+      {% for l in items %}
+      <li>{{ l.name }} <span class="cv-level">{{ l.get_level_display }}</span></li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+  {% endwith %}
+</article>

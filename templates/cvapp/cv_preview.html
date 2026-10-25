@@ -1,0 +1,18 @@
+{% extends "base_print.html" %}
+
+{% block title %}{{ cv.full_name }} – CV{% endblock %}
+
+{% block toolbar %}
+  <a class="btn btn-sm btn-outline-secondary" href="{% url 'cv_detail' cv.pk %}">← Atpakaļ</a>
+  <label for="theme-select" class="mb-0 ms-3 small">Dizains:</label>
+  <select id="theme-select" class="form-select form-select-sm w-auto">
+    {% for value, label in template_choices %}
+      <option value="{{ value }}" {% if value == cv.template %}selected{% endif %}>{{ label }}</option>
+    {% endfor %}
+  </select>
+  <button type="button" class="btn btn-sm btn-success ms-auto" data-print>🖨️ Drukāt / saglabāt PDF</button>
+{% endblock %}
+
+{% block content %}
+  {% include "cvapp/_cv_document.html" %}
+{% endblock %}

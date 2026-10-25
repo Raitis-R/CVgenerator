@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Reģistrācija{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6 col-lg-5">
+    <div class="card shadow-sm">
+      <div class="card-body p-4 form-box">
+        <h1 class="h3 mb-3">Izveidot kontu</h1>
+        <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn btn-primary w-100">Reģistrēties</button>
+        </form>
+        <p class="mt-3 mb-0 text-center small">
+          Jau ir konts? <a href="{% url 'login' %}">Ieiet</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
