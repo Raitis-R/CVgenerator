@@ -1,8 +1,3 @@
-"""PDF ģenerēšana.
-
-CV tiek uzzīmēts ar reportlab un nosūtīts pārlūkam kā lejupielādējams PDF fails.
-Teksts PDF failā paliek atlasāms un kopējams.
-"""
 import os
 from datetime import date
 from io import BytesIO
@@ -24,8 +19,6 @@ from reportlab.platypus import (
     TableStyle,
 )
 
-# Fonti ar latviešu burtiem (ā, č, ē, ģ, ī, ķ, ļ, ņ, š, ū, ž).
-# Standarta PDF fonti tos neatbalsta, tāpēc meklējam sistēmas TTF fontu.
 FONT_CANDIDATES = [
     ("C:/Windows/Fonts/arial.ttf", "C:/Windows/Fonts/arialbd.ttf"),
     ("/Library/Fonts/Arial.ttf", "/Library/Fonts/Arial Bold.ttf"),
@@ -37,7 +30,6 @@ FONT_CANDIDATES = [
 
 BRAND = colors.HexColor("#3b5bdb")
 
-# Dizaini: tie paši trīs, kas ir lapā (classic, modern, minimal)
 THEMES = {
     "classic": {"center": True, "band": False, "accent": colors.HexColor("#222222"), "rule": True},
     "modern": {"center": False, "band": True, "accent": BRAND, "rule": False},
@@ -46,20 +38,16 @@ THEMES = {
 
 
 def _register_fonts():
-    """Atrod pirmo pieejamo fontu pāri un reģistrē to. Atgriež (parastais, treknais)."""
     for regular, bold in FONT_CANDIDATES:
         if os.path.exists(regular) and os.path.exists(bold):
             pdfmetrics.registerFont(TTFont("CVFont", regular))
             pdfmetrics.registerFont(TTFont("CVFont-Bold", bold))
-            # Lai <b>...</b> darbotos ar šo fontu
             pdfmetrics.registerFontFamily("CVFont", normal="CVFont", bold="CVFont-Bold")
             return "CVFont", "CVFont-Bold"
-    # Rezerves variants: latviešu burti var neparādīties pareizi
     return "Helvetica", "Helvetica-Bold"
 
 
 def _text(value):
-    """Droši pārveido tekstu priekš Paragraph (izslēdz <, &, saglabā jaunas rindas)."""
     return escape(str(value)).replace("\n", "<br/>")
 
 
@@ -68,13 +56,12 @@ def _month_year(d):
 
 
 def build_cv_pdf(cv):
-    """Izveido PDF no CV objekta un atgriež baitus."""
     font, bold = _register_fonts()
     theme = THEMES.get(cv.template, THEMES["classic"])
     accent = theme["accent"]
 
     margin = 18 * mm
-    width = A4[0] - 2 * margin - 12  # 12 = iekšējās atstarpes dokumenta rāmī
+    width = A4[0] - 2 * margin - 12
 
     base = ParagraphStyle("base", fontName=font, fontSize=10, leading=14, textColor=colors.HexColor("#222222"))
     h1 = ParagraphStyle("h1", parent=base, fontName=bold, fontSize=22, leading=26,
@@ -90,7 +77,7 @@ def build_cv_pdf(cv):
 
     story = []
 
-    # ----- Galvene -----
+    # Galvene
     contact_parts = [cv.email, cv.phone, cv.city]
     header = [Paragraph(_text(cv.full_name), h1)]
     if cv.job_title:
@@ -132,12 +119,12 @@ def build_cv_pdf(cv):
             story.append(Paragraph(_text(description), base))
         story.append(Spacer(1, 5))
 
-    # ----- Profils -----
+    # Profils
     if cv.summary:
         section("Profils")
         story.append(Paragraph(_text(cv.summary), base))
 
-    # ----- Darba pieredze -----
+    # Darba pieredze
     experiences = list(cv.experiences.all())
     if experiences:
         section("Darba pieredze")
@@ -146,7 +133,7 @@ def build_cv_pdf(cv):
             item(f"<b>{_text(e.position)}</b>, {_text(e.company)}",
                  f"{_month_year(e.start_date)} – {end}", e.description)
 
-    # ----- Izglītība -----
+    # Izglītība
     educations = list(cv.educations.all())
     if educations:
         section("Izglītība")
@@ -154,7 +141,7 @@ def build_cv_pdf(cv):
             end = ed.end_year if ed.end_year else "līdz šim"
             item(f"<b>{_text(ed.degree)}</b>, {_text(ed.institution)}", f"{ed.start_year} – {end}")
 
-    # ----- Prasmes un valodas -----
+    # Prasmes un valodas
     for title, rows in (("Prasmes", list(cv.skills.all())), ("Valodas", list(cv.languages.all()))):
         if rows:
             section(title)
