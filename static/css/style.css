@@ -1,104 +1,270 @@
-/* ---------- Vispārīgi ---------- */
 :root {
-  --brand: #3b5bdb;
-  --brand-dark: #2b44a8;
-  --bg: #f4f6fb;
+    --brand: #3b5bdb;
+    --brand-dark: #2b44a8;
+    --bg: #f4f6fb;
 }
 
-body { background: var(--bg); }
+body {
+    background: var(--bg);
+}
 
-.app-navbar { background: linear-gradient(90deg, var(--brand-dark), var(--brand)); }
-.app-footer { border-top: 1px solid #dde1ee; background: #fff; }
+.app-navbar {
+    background: linear-gradient(90deg, var(--brand-dark), var(--brand));
+}
 
-/* ---------- Formas (form.as_p) ---------- */
-.form-box p { margin-bottom: .75rem; }
-.form-box label { display: block; font-weight: 500; margin-bottom: .25rem; }
-.form-box input:not([type=hidden]):not([type=checkbox]),
+.app-footer {
+    background: #fff;
+    border-top: 1px solid #dde1ee;
+}
+
+
+/* Formas */
+
+.form-box p {
+    margin-bottom: 12px;
+}
+
+.form-box label {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+.form-box input:not([type="hidden"]):not([type="checkbox"]),
 .form-box select,
 .form-box textarea {
-  display: block;
-  width: 100%;
-  padding: .4rem .6rem;
-  border: 1px solid #ced4da;
-  border-radius: .375rem;
+    display: block;
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    box-sizing: border-box;
 }
-.form-box .helptext { display: block; font-size: .8rem; color: #6c757d; }
-.form-box .errorlist { color: #dc3545; list-style: none; padding: 0; margin: 0 0 .25rem; font-size: .9rem; }
 
-.hero { padding: 3rem 1rem 1rem; }
+.form-box .helptext {
+    display: block;
+    color: #6c757d;
+    font-size: 13px;
+}
+
+.form-box .errorlist {
+    color: #dc3545;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 5px;
+    font-size: 14px;
+}
+
+
+/* Sakuma lapa */
+
+.hero {
+    padding: 45px 15px 15px;
+}
+
 .feature-card {
-  background: #fff;
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, .08);
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
 }
+
 .empty-state {
-  background: #fff;
-  border: 2px dashed #c5cbe0;
-  border-radius: 12px;
-  padding: 3rem 1rem;
+    background: #fff;
+    border: 2px dashed #c5cbe0;
+    border-radius: 12px;
+    padding: 45px 15px;
 }
 
-/* ---------- CV "papīrs" ---------- */
+
+/* CV priekšskatījums */
+
 .paper {
-  background: #fff;
-  max-width: 800px;
-  margin: 1rem auto;
-  padding: 2.5rem;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, .12);
+    background: white;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 40px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.12);
 }
-.paper-inline { margin: 0; max-width: 100%; padding: 1.5rem; }
 
-.print-body { background: #e9ecf3; }
+.paper-inline {
+    margin: 0;
+    max-width: 100%;
+    padding: 24px;
+}
+
+.print-body {
+    background: #e9ecf3;
+}
+
 .toolbar {
-  display: flex;
-  align-items: center;
-  gap: .5rem;
-  max-width: 800px;
-  margin: 1rem auto 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    max-width: 800px;
+    margin: 15px auto 0;
 }
 
-/* ---------- CV dokuments ---------- */
-.cv-document { font-family: Georgia, "Times New Roman", serif; color: #222; line-height: 1.45; }
-.cv-document h1 { font-size: 1.9rem; margin: 0; }
-.cv-document h2 { font-size: 1.1rem; text-transform: uppercase; letter-spacing: .06em; margin: 0 0 .5rem; }
-.cv-document p { margin-bottom: .4rem; }
-.cv-header { margin-bottom: 1.25rem; }
-.cv-job { font-size: 1.1rem; margin: .1rem 0; }
-.cv-contacts { color: #555; font-size: .9rem; }
-.cv-section { margin-bottom: 1.25rem; }
-.cv-item { margin-bottom: .75rem; }
-.cv-dates { float: right; color: #555; font-size: .9rem; }
-.cv-skills { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: .4rem 1.25rem; }
-.cv-level { color: #666; font-size: .85rem; }
 
-/* Klasisks */
-.cv-classic h1 { text-align: center; }
-.cv-classic .cv-job, .cv-classic .cv-contacts { text-align: center; }
-.cv-classic h2 { border-bottom: 1px solid #222; padding-bottom: .2rem; }
+/* CV izkārtojums */
 
-/* Moderns */
-.cv-modern { font-family: "Segoe UI", Arial, sans-serif; }
+.cv-document {
+    font-family: Georgia, "Times New Roman", serif;
+    color: #222;
+    line-height: 1.45;
+}
+
+.cv-document h1 {
+    font-size: 30px;
+    margin: 0;
+}
+
+.cv-document h2 {
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 0 10px;
+}
+
+.cv-document p {
+    margin-bottom: 6px;
+}
+
+.cv-header {
+    margin-bottom: 20px;
+}
+
+.cv-job {
+    font-size: 17px;
+    margin: 3px 0;
+}
+
+.cv-contacts {
+    color: #555;
+    font-size: 14px;
+}
+
+.cv-section {
+    margin-bottom: 20px;
+}
+
+.cv-item {
+    margin-bottom: 12px;
+}
+
+.cv-dates {
+    float: right;
+    color: #555;
+    font-size: 14px;
+}
+
+.cv-skills {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+}
+
+.cv-level {
+    color: #666;
+    font-size: 13px;
+}
+
+
+/* Klasiskais dizains */
+
+.cv-classic h1 {
+    text-align: center;
+}
+
+.cv-classic .cv-job,
+.cv-classic .cv-contacts {
+    text-align: center;
+}
+
+.cv-classic h2 {
+    border-bottom: 1px solid #222;
+    padding-bottom: 4px;
+}
+
+
+/* Modernais dizains */
+
+.cv-modern {
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
 .cv-modern .cv-header {
-  background: var(--brand);
-  color: #fff;
-  padding: 1.25rem 1.5rem;
-  margin: -1.5rem -1.5rem 1.25rem;
+    background: var(--brand);
+    color: white;
+    padding: 20px 24px;
+    margin: -24px -24px 20px;
 }
-.cv-modern .cv-contacts { color: #dfe5ff; }
-.cv-modern h2 { color: var(--brand); border-left: 4px solid var(--brand); padding-left: .6rem; }
 
-/* Minimālistisks */
-.cv-minimal { font-family: "Helvetica Neue", Arial, sans-serif; font-weight: 300; }
-.cv-minimal h1 { font-weight: 200; letter-spacing: .05em; }
-.cv-minimal h2 { font-size: .9rem; color: #888; font-weight: 600; }
-.cv-minimal .cv-header { border-bottom: 1px solid #ddd; padding-bottom: 1rem; }
+.cv-modern .cv-contacts {
+    color: #dfe5ff;
+}
 
-/* ---------- Drukāšana ---------- */
+.cv-modern h2 {
+    color: var(--brand);
+    border-left: 4px solid var(--brand);
+    padding-left: 10px;
+}
+
+
+/* Minimālistiskais dizains */
+
+.cv-minimal {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-weight: 300;
+}
+
+.cv-minimal h1 {
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+.cv-minimal h2 {
+    font-size: 15px;
+    color: #888;
+    font-weight: 600;
+}
+
+.cv-minimal .cv-header {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 16px;
+}
+
+
+/* Drukāšana */
+
 @media print {
-  body, .print-body { background: #fff !important; }
-  .no-print, nav, footer, .alert { display: none !important; }
-  .paper { box-shadow: none; margin: 0; padding: 0; max-width: none; }
-  .cv-modern .cv-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; margin: 0 0 1.25rem; }
-  @page { size: A4; margin: 15mm; }
+    body,
+    .print-body {
+        background: white !important;
+    }
+
+    .no-print, nav, footer, .alert {
+        display: none !important;
+    }
+
+    .paper {
+        box-shadow: none;
+        margin: 0;
+        padding: 0;
+        max-width: none;
+    }
+
+    .cv-modern .cv-header {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        margin: 0 0 20px;
+    }
+
+    @page {
+        size: A4;
+        margin: 15mm;
+    }
 }

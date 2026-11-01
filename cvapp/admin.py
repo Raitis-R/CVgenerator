@@ -1,6 +1,3 @@
-"""CMS: Django administrēšanas panelis (/admin/).
-Šeit reģistrējam modeļus, lai tos varētu pārvaldīt caur admin lapu.
-"""
 from django.contrib import admin
 
 from .models import CV, Education, Experience, Language, Skill

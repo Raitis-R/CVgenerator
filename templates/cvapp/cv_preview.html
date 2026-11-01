@@ -10,7 +10,7 @@
       <option value="{{ value }}" {% if value == cv.template %}selected{% endif %}>{{ label }}</option>
     {% endfor %}
   </select>
-  <button type="button" class="btn btn-sm btn-success ms-auto" data-print>🖨️ Drukāt / saglabāt PDF</button>
+  <a class="btn btn-sm btn-success ms-auto" href="{% url 'cv_pdf' cv.pk %}">Lejupielādēt PDF</a>
 {% endblock %}
 
 {% block content %}

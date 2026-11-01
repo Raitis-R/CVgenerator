@@ -1,4 +1,3 @@
-// CV ģeneratora front-end skripts
 document.addEventListener("DOMContentLoaded", function () {
   // "Drukāt / saglabāt PDF" poga
   document.querySelectorAll("[data-print]").forEach(function (btn) {

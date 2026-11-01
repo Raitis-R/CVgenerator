@@ -1,13 +1,10 @@
-"""Skati (views): katra funkcija apstrādā vienu lapu.
-
-CRUD = Create (izveidot), Read (apskatīt), Update (labot), Delete (dzēst).
-Visiem skatiem ar @login_required jābūt pieteikušamies.
-Ar owner=request.user nodrošinām, ka lietotājs redz tikai savus datus.
-"""
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
+from django.http import HttpResponse
+from django.utils.text import slugify
+from .pdf import build_cv_pdf
 
 from .forms import (
     CVForm,
@@ -20,9 +17,7 @@ from .forms import (
 from .models import CV, TEMPLATE_CHOICES, Education, Experience, Language, Skill
 
 
-# ---------------------------------------------------------------
-# Sākumlapa un reģistrācija
-# ---------------------------------------------------------------
+# sākumlapa un reģistrācija
 def home(request):
     return render(request, "home.html")
 
@@ -38,10 +33,8 @@ def register(request):
         form = RegisterForm()
     return render(request, "registration/register.html", {"form": form})
 
+# CV
 
-# ---------------------------------------------------------------
-# CV: CRUD
-# ---------------------------------------------------------------
 @login_required
 def cv_list(request):  # READ: saraksts
     cvs = CV.objects.filter(owner=request.user)
@@ -69,8 +62,8 @@ def cv_create(request):  # CREATE
     if request.method == "POST":
         form = CVForm(request.POST)
         if form.is_valid():
-            cv = form.save(commit=False)  # vēl nesaglabājam datu bāzē
-            cv.owner = request.user       # piešķiram īpašnieku
+            cv = form.save(commit=False)
+            cv.owner = request.user
             cv.save()
             messages.success(request, "CV izveidots.")
             return redirect("cv_detail", pk=cv.pk)
@@ -80,7 +73,7 @@ def cv_create(request):  # CREATE
 
 
 @login_required
-def cv_edit(request, pk):  # UPDATE
+def cv_edit(request, pk): # update
     cv = get_object_or_404(CV, pk=pk, owner=request.user)
     if request.method == "POST":
         form = CVForm(request.POST, instance=cv)
@@ -94,7 +87,7 @@ def cv_edit(request, pk):  # UPDATE
 
 
 @login_required
-def cv_delete(request, pk):  # DELETE
+def cv_delete(request, pk):  # delete
     cv = get_object_or_404(CV, pk=pk, owner=request.user)
     if request.method == "POST":
         cv.delete()
@@ -102,10 +95,8 @@ def cv_delete(request, pk):  # DELETE
         return redirect("cv_list")
     return render(request, "cvapp/confirm_delete.html", {"obj": cv, "back_url": f"/cv/{cv.pk}/"})
 
+# Izglītība
 
-# ---------------------------------------------------------------
-# Izglītība: CRUD
-# ---------------------------------------------------------------
 @login_required
 def education_add(request, cv_id):
     cv = get_object_or_404(CV, pk=cv_id, owner=request.user)
@@ -143,10 +134,8 @@ def education_delete(request, pk):
         return redirect("cv_detail", pk=cv_pk)
     return render(request, "cvapp/confirm_delete.html", {"obj": item, "back_url": f"/cv/{item.cv.pk}/"})
 
+# Darba pieredze
 
-# ---------------------------------------------------------------
-# Darba pieredze: CRUD
-# ---------------------------------------------------------------
 @login_required
 def experience_add(request, cv_id):
     cv = get_object_or_404(CV, pk=cv_id, owner=request.user)
@@ -184,10 +173,8 @@ def experience_delete(request, pk):
         return redirect("cv_detail", pk=cv_pk)
     return render(request, "cvapp/confirm_delete.html", {"obj": item, "back_url": f"/cv/{item.cv.pk}/"})
 
+# Prasmes:
 
-# ---------------------------------------------------------------
-# Prasmes: CRUD
-# ---------------------------------------------------------------
 @login_required
 def skill_add(request, cv_id):
     cv = get_object_or_404(CV, pk=cv_id, owner=request.user)
@@ -225,10 +212,8 @@ def skill_delete(request, pk):
         return redirect("cv_detail", pk=cv_pk)
     return render(request, "cvapp/confirm_delete.html", {"obj": item, "back_url": f"/cv/{item.cv.pk}/"})
 
+# Valodas:
 
-# ---------------------------------------------------------------
-# Valodas: CRUD
-# ---------------------------------------------------------------
 @login_required
 def language_add(request, cv_id):
     cv = get_object_or_404(CV, pk=cv_id, owner=request.user)
@@ -265,3 +250,11 @@ def language_delete(request, pk):
         item.delete()
         return redirect("cv_detail", pk=cv_pk)
     return render(request, "cvapp/confirm_delete.html", {"obj": item, "back_url": f"/cv/{item.cv.pk}/"})
+
+@login_required
+def cv_pdf(request, pk):  # lejupielādē CV kā PDF failu
+    cv = get_object_or_404(CV, pk=pk, owner=request.user)
+    response = HttpResponse(build_cv_pdf(cv), content_type="application/pdf")
+    filename = f"{slugify(cv.full_name) or 'cv'}-CV.pdf"
+    response["Content-Disposition"] = f'attachment; filename="{filename}"'
+    return response

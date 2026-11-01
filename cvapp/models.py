@@ -1,8 +1,6 @@
-"""Datu bāzes tabulas. Katra klase = viena tabula."""
 from django.contrib.auth.models import User
 from django.db import models
 
-# Izvēles saraksti: (vērtība datu bāzē, teksts, ko redz lietotājs)
 TEMPLATE_CHOICES = [
     ("classic", "Klasisks"),
     ("modern", "Moderns"),
@@ -10,7 +8,7 @@ TEMPLATE_CHOICES = [
 ]
 
 SKILL_LEVELS = [
-    (1, "Sācējs"),
+    (1, "Iesācējs"),
     (2, "Pamata"),
     (3, "Vidējs"),
     (4, "Labs"),
@@ -28,10 +26,10 @@ LANGUAGE_LEVELS = [
 ]
 
 
-# 1. tabula: CV (pieder lietotājam)
+# 1. tabula: CV
 class CV(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="cvs")
-    title = models.CharField("CV nosaukums", max_length=120)
+    title = models.CharField("CV profesijas nosaukums", max_length=120)
     full_name = models.CharField("Vārds, uzvārds", max_length=120)
     job_title = models.CharField("Vēlamais amats", max_length=120, blank=True)
     email = models.EmailField("E-pasts")
@@ -49,7 +47,7 @@ class CV(models.Model):
         return self.title
 
 
-# 2. tabula: izglītība (daudz ierakstu vienai CV)
+# 2. tabula: izglītība
 class Education(models.Model):
     cv = models.ForeignKey(CV, on_delete=models.CASCADE, related_name="educations")
     institution = models.CharField("Mācību iestāde", max_length=150)

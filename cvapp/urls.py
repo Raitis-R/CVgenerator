@@ -13,6 +13,7 @@ urlpatterns = [
     path("cv/<int:pk>/edit/", views.cv_edit, name="cv_edit"),
     path("cv/<int:pk>/delete/", views.cv_delete, name="cv_delete"),
     path("cv/<int:pk>/preview/", views.cv_preview, name="cv_preview"),
+    path("cv/<int:pk>/pdf/", views.cv_pdf, name="cv_pdf"),
 
     # Izglītība
     path("cv/<int:cv_id>/education/add/", views.education_add, name="education_add"),
@@ -34,3 +35,4 @@ urlpatterns = [
     path("language/<int:pk>/edit/", views.language_edit, name="language_edit"),
     path("language/<int:pk>/delete/", views.language_delete, name="language_delete"),
 ]
+

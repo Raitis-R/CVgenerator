@@ -9,6 +9,6 @@ urlpatterns = [
     path("login/", auth_views.LoginView.as_view(), name="login"),  # autorizācija
     path("logout/", auth_views.LogoutView.as_view(), name="logout"),
     path("api/", include(router.urls)),                            # REST serviss
-    path("api-auth/", include("rest_framework.urls")),             # DRF pieteikšanās
+    path("api-auth/", include("rest_framework.urls")),             # pieteikšanās
     path("", include("cvapp.urls")),
 ]

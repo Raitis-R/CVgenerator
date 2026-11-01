@@ -1,4 +1,3 @@
-"""Django iestatījumi projektam "CV ģenerators"."""
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -8,14 +7,14 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
-    "django.contrib.admin",       # CMS (administrēšanas panelis)
+    "django.contrib.admin",       # administrēšanas panelis
     "django.contrib.auth",        # autorizācija
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",             # REST serviss
-    "cvapp",                      # mūsu lietotne
+    "cvapp",                      # lietotne
 ]
 
 MIDDLEWARE = [

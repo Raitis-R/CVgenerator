@@ -1,8 +1,3 @@
-"""REST serviss (Django REST Framework).
-
-Serializer pārvērš modeli JSON formātā, ViewSet nodrošina GET/POST/PUT/DELETE,
-router automātiski izveido adreses (/api/cvs/, /api/skills/ utt.).
-"""
 from rest_framework import serializers, viewsets
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.routers import DefaultRouter
@@ -10,7 +5,7 @@ from rest_framework.routers import DefaultRouter
 from .models import CV, Education, Experience, Language, Skill
 
 
-# ---------- Serializers ----------
+# Serializers
 class CVSerializer(serializers.ModelSerializer):
     class Meta:
         model = CV
@@ -42,7 +37,7 @@ class LanguageSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-# ---------- ViewSets ----------
+# ViewSets
 class CVViewSet(viewsets.ModelViewSet):
     serializer_class = CVSerializer
 
@@ -55,15 +50,13 @@ class CVViewSet(viewsets.ModelViewSet):
 
 
 class SectionViewSet(viewsets.ModelViewSet):
-    """Kopīga klase CV sadaļām. Apakšklasēs norāda tikai modeli un serializeri."""
-
     model = None
 
     def get_queryset(self):
         return self.model.objects.filter(cv__owner=self.request.user)
 
     def check_cv(self, serializer):
-        # neļaujam pievienot ierakstu svešai CV
+        #neļaujam pievienot ierakstu svešai CV
         if serializer.validated_data["cv"].owner != self.request.user:
             raise PermissionDenied("Šī CV nav jūsu.")
 
@@ -96,7 +89,7 @@ class LanguageViewSet(SectionViewSet):
     serializer_class = LanguageSerializer
 
 
-# ---------- Adreses ----------
+# Adreses
 router = DefaultRouter()
 router.register("cvs", CVViewSet, basename="cv")
 router.register("educations", EducationViewSet, basename="education")

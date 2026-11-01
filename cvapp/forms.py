@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from .models import CV, Education, Experience, Language, Skill
 
 
-# Reģistrācijas forma (gatava Django forma + e-pasts)
+# Reģistrācijas forma
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(label="E-pasts")
 
@@ -14,7 +14,6 @@ class RegisterForm(UserCreationForm):
         fields = ["username", "email"]
 
 
-# Katra forma ir uzbūvēta no modeļa: norādām modeli un laukus
 class CVForm(forms.ModelForm):
     class Meta:
         model = CV
@@ -31,7 +30,7 @@ class ExperienceForm(forms.ModelForm):
     class Meta:
         model = Experience
         fields = ["company", "position", "start_date", "end_date", "description"]
-        # date ievades lauks, lai pārlūks rāda kalendāru
+        # Kalendāra skats
         widgets = {
             "start_date": forms.DateInput(attrs={"type": "date"}, format="%Y-%m-%d"),
             "end_date": forms.DateInput(attrs={"type": "date"}, format="%Y-%m-%d"),
